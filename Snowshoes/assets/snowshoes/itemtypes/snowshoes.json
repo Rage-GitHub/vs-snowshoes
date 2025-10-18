@@ -172,9 +172,9 @@
     }
   },
   "durabilitybytype": {
-    "snowshoes-wooden-crude-plain-*": 150,
-    "snowshoes-wooden-*-treated": 450,
-    "snowshoes-wooden-*": 300
+    "snowshoes-wooden-crude-plain-*": 200,
+    "snowshoes-wooden-*-treated": 550,
+    "snowshoes-wooden-*": 350
   },
   "behaviorsByType": {
     "*-plain-*": [

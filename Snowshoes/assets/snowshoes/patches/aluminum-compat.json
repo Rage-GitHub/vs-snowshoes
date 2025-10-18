@@ -1,4 +1,5 @@
 [
+  // Enable snowshoe frame item
   {
     "file": "itemtypes/shoeframe",
     "path": "/enabled",
@@ -6,6 +7,7 @@
     "value": true,
     "dependsOn": [ { "modid": "bauxitealuminum" } ]
   },
+  // Enable snowshoe frame smithing recipe
   {
     "file": "recipes/smithing/shoeframe",
     "path": "/enabled",
@@ -13,6 +15,7 @@
     "value": true,
     "dependsOn": [ { "modid": "bauxitealuminum" } ]
   },
+  // Add aluminum as a supported metal to snowshoe frame smithing recipe
   {
     "file": "recipes/smithing/shoeframe",
     "path": "/ingredient/allowedVariants/-",
@@ -20,6 +23,7 @@
     "value": "aluminum",
     "dependsOn": [ { "modid": "bauxitealuminum" } ]
   },
+  // Add aluminum as a supported metal to snowshoe frame item
   {
     "file": "itemtypes/shoeframe",
     "path": "/variantgroups/0/states/-",
@@ -27,7 +31,7 @@
     "value": "aluminum",
     "dependsOn": [ { "modid": "bauxitealuminum" } ]
   },
-
+  // If not already present, add "metal" variant to snowshoes item
   {
     "file": "itemtypes/snowshoes",
     "path": "/variantgroups/0/states/-",
@@ -35,6 +39,7 @@
     "value": "metal",
     "dependsOn": [ { "modid": "bauxitealuminum" } ]
   },
+  // Add aluminum variants to snowshoes item
   {
     "file": "itemtypes/snowshoes",
     "path": "/variantgroups/-",
@@ -47,6 +52,7 @@
     },
     "dependsOn": [ { "modid": "bauxitealuminum" } ]
   },
+  // Remove impossible snowshoe codes introduced by these aluminum variants
   {
     "file": "itemtypes/snowshoes",
     "path": "/skipVariants/-",
@@ -59,6 +65,7 @@
     ],
     "dependsOn": [ { "modid": "bauxitealuminum" } ]
   },
+  // Add shape to aluminum variant for snowshoes item
   {
     "file": "itemtypes/snowshoes",
     "path": "/shapeByType",
@@ -70,6 +77,7 @@
     },
     "dependsOn": [ { "modid": "bauxitealuminum" } ]
   },
+  // Add texture to aluminum variant for snowshoes item
   {
     "file": "itemtypes/snowshoes",
     "frompath": "/texturesByType/*",
@@ -102,17 +110,18 @@
     "op": "move",
     "dependsOn": [ { "modid": "bauxitealuminum" } ]
   },
+  // Add durability to all aluminum variants for snowshoes item
   {
     "file": "itemtypes/snowshoes",
     "path": "/durabilitybytype",
     "op": "addmerge",
     "value": {
-      "snowshoes-metal-aluminum-*": 750,
-      "snowshoes-metal-aluminumsturdy-*": 900
+      "snowshoes-metal-aluminum-*": 850,
+      "snowshoes-metal-aluminumsturdy-*": 1000
     },
     "dependsOn": [ { "modid": "bauxitealuminum" } ]
   },
-
+  // Add aluminum snowshoes grid recipe
   {
     "file": "recipes/grid/metal/snowshoes-plain",
     "path": "/0/enabled",
@@ -127,7 +136,6 @@
     "value": true,
     "dependsOn": [ { "modid": "bauxitealuminum" } ]
   },
-
   {
     "file": "recipes/grid/metal/snowshoes-fur",
     "path": "/0/enabled",
@@ -135,7 +143,7 @@
     "value": true,
     "dependsOn": [ { "modid": "bauxitealuminum" } ]
   },
-
+  // Add aluminum snowshoes repair grid recipe
   {
     "file": "recipes/grid/metal/repair/snowshoes-plain",
     "path": "/0/enabled",
@@ -157,7 +165,6 @@
     "value": "aluminumsturdy",
     "dependsOn": [ { "modid": "bauxitealuminum" } ]
   },
-
   {
     "file": "recipes/grid/metal/repair/snowshoes-fur",
     "path": "/0/enabled",
