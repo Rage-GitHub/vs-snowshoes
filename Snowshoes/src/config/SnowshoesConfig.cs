@@ -76,7 +76,7 @@ namespace Snowshoes.src.config {
          * 
          * Side: Server
          */
-        public float leatherRepairPercentage = 0.3f;
+        public float leatherRepairPercentage = 0.2f;
 
         /*
          * Let players repair snowshoes as much as they want or limit how many times snowshoes
