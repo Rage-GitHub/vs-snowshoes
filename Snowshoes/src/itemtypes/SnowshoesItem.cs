@@ -24,7 +24,7 @@ namespace Snowshoes.src.itemtypes
 
         public override EnumItemClass ItemClass => throw new NotImplementedException();
 
-        public bool HandleOnCreatedByCraftingRepair(ItemSlot[] inputs, ref ItemSlot outputSlot, GridRecipe byRecipe)
+        public bool HandleOnCreatedByCraftingRepair(ItemSlot[] inputs, ref ItemSlot outputSlot, IRecipeBase byRecipe)
         {
 
             int curDur = outputSlot.Itemstack.Collectible.GetRemainingDurability(outputSlot.Itemstack);
@@ -119,7 +119,7 @@ namespace Snowshoes.src.itemtypes
             return true;
         }
 
-        public bool HandleConsumeCraftingIngredients(ItemSlot[] inSlots, ItemSlot outputSlot, GridRecipe recipe)
+        public bool HandleConsumeCraftingIngredients(ItemSlot[] inSlots, ItemSlot outputSlot, IRecipeBase recipe)
         {
             // Consume as much materials in the input grid as needed
             if (recipe.Name.Path.Contains("repair"))
