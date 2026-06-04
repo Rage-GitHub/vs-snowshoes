@@ -20,7 +20,8 @@ namespace Snowshoes.src.utils
 
             if(inv == null) return null;
 
-            ItemSlot slotBoots = inv.ElementAt(4);
+            // Use the EnumCharacterDressType.Foot enum value for robustness across game versions
+            ItemSlot slotBoots = inv[(int)EnumCharacterDressType.Foot];
 
             return slotBoots;
         }
@@ -67,7 +68,7 @@ namespace Snowshoes.src.utils
         public static void MarkSnowshoesSlotDirty(IServerPlayer pl)
         {
             IPlayerInventoryManager im = pl.InventoryManager;
-            ((InventoryCharacter) im.GetInventory(im.GetInventoryName("character")))[4].MarkDirty();
+            ((InventoryCharacter) im.GetInventory(im.GetInventoryName("character")))[(int)EnumCharacterDressType.Foot].MarkDirty();
         }
 
         public static float GetShoesCondition(IPlayer pl)

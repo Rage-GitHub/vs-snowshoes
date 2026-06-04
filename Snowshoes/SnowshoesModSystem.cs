@@ -60,7 +60,7 @@ namespace Snowshoes
 
                 if (pl == null)
                 {
-                    logger.Warning("Couldn't register snow walking logic for " + pl.PlayerName + ".. Snowshoes won't work for this player!");
+                    logger.Warning("Couldn't register snow walking logic for local player (null).. Snowshoes won't work for this player!");
                     return false;
                 }
 
@@ -188,7 +188,9 @@ namespace Snowshoes
                         if (i == 0 && i == j) PlacePlayerOnTop(pl, bl);
 
                         // Set snowlogged block to my custom snow
-                        bacc.SetBlock(AssetUtils.GetSnowloggedBlockId(bl, currentLayer, "snowshoes"), blPos);
+                        int snowshoesBlockId = AssetUtils.GetSnowloggedBlockId(bl, currentLayer, "snowshoes");
+                        if (snowshoesBlockId <= 0) continue;
+                        bacc.SetBlock(snowshoesBlockId, blPos);
 
                         // Set my custom snow back to normal after some time
                         RevertSnowloggedBlock(blPos, currentLayer);
@@ -290,7 +292,7 @@ namespace Snowshoes
         private void PlacePlayerOnTop(IPlayer pl, Block bl)
         {
             if (bl == null) return;
-            if (bl.CollisionBoxes == null) return;
+            if (bl.CollisionBoxes == null || bl.CollisionBoxes.Length == 0) return;
 
             double actualY = pl.Entity.Pos.Y;
             int normalizedY = (int)actualY;
@@ -321,7 +323,8 @@ namespace Snowshoes
                 }
 
                 // Revert snow layer to its vanilla version
-                api.World.BlockAccessor.SetBlock(AssetUtils.GetSnowloggedBlockId(bl, currentLayer, "game"), blPos);
+                int revertBlockId = AssetUtils.GetSnowloggedBlockId(bl, currentLayer, "game");
+                if (revertBlockId > 0) api.World.BlockAccessor.SetBlock(revertBlockId, blPos);
             }, 500);
         }
     }

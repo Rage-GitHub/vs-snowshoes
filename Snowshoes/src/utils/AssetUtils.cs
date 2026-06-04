@@ -26,7 +26,9 @@ namespace Snowshoes.src.utils
             AssetLocation gameSnowLayer = bl.CodeWithVariant(variantType, variantValue);
             gameSnowLayer.Domain = domain;
 
-            return SnowshoesModSystem.api.World.BlockAccessor.GetBlock(gameSnowLayer).Id;
+            Block found = SnowshoesModSystem.api.World.BlockAccessor.GetBlock(gameSnowLayer);
+            if (found == null || found.Id == 0) return -1;
+            return found.Id;
         }
 
         public static bool IsSnowloggable(Block bl)
