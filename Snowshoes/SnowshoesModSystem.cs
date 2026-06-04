@@ -60,7 +60,7 @@ namespace Snowshoes
 
                 if (pl == null)
                 {
-                    logger.Warning("Couldn't register snow walking logic for local player (null).. Snowshoes won't work for this player!");
+                    logger.Warning("Couldn't register snow walking logic for local player (null). Snowshoes won't work for this player!");
                     return false;
                 }
 
@@ -324,7 +324,8 @@ namespace Snowshoes
 
                 // Revert snow layer to its vanilla version
                 int revertBlockId = AssetUtils.GetSnowloggedBlockId(bl, currentLayer, "game");
-                if (revertBlockId > 0) api.World.BlockAccessor.SetBlock(revertBlockId, blPos);
+                if (revertBlockId <= 0) return;
+                api.World.BlockAccessor.SetBlock(revertBlockId, blPos);
             }, 500);
         }
     }
