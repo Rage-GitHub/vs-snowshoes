@@ -29,7 +29,7 @@ namespace Snowshoes.src.itemtypes
             snowshoes.HandleHeldItemInfo(inSlot, dsc);
         }
 
-        public override void OnCreatedByCrafting(ItemSlot[] allInputslots, ItemSlot outputSlot, GridRecipe byRecipe) {
+        public override void OnCreatedByCrafting(ItemSlot[] allInputslots, ItemSlot outputSlot, IRecipeBase byRecipe) {
             if (outputSlot is DummySlot) return;
 
             if (byRecipe.Name.Path.Contains("repair")) {
@@ -44,7 +44,7 @@ namespace Snowshoes.src.itemtypes
             base.OnModifiedInInventorySlot(world, slot, extractedStack);
         }
 
-        public override bool ConsumeCraftingIngredients(ItemSlot[] inSlots, ItemSlot outputSlot, GridRecipe recipe) {
+        public override bool ConsumeCraftingIngredients(ItemSlot[] inSlots, ItemSlot outputSlot, IRecipeBase recipe) {
             return snowshoes.HandleConsumeCraftingIngredients(inSlots, outputSlot, recipe);
         }
 

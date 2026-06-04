@@ -42,7 +42,7 @@ namespace Snowshoes.src.itemtypes
         }
 
         // Merge attributes from fur boots and snowshoes into fur snowshoes item because "mergeAttributesFrom" in JSON doesn't work...
-        public override void OnCreatedByCrafting(ItemSlot[] inSlots, ItemSlot outputSlot, GridRecipe byRecipe) {
+        public override void OnCreatedByCrafting(ItemSlot[] inSlots, ItemSlot outputSlot, IRecipeBase byRecipe) {
             if (outputSlot is DummySlot) return;
 
             if (byRecipe.Name.Path.Contains("repair"))
@@ -50,7 +50,7 @@ namespace Snowshoes.src.itemtypes
                 if (!snowshoes.HandleOnCreatedByCraftingRepair(inSlots, ref outputSlot, byRecipe)) return;
             }
 
-            if (Regex.IsMatch(byRecipe.Name, @"snowshoes:assemble-(un)?treated.*")) {
+            if (Regex.IsMatch(byRecipe.Name.ToString(), @"snowshoes:assemble-(un)?treated.*")) {
                 ItemSlot snowshoesSlot = inSlots.First((sl) => {
                     return sl.Itemstack != null && sl.Itemstack.Item != null && sl.Itemstack.Item.FirstCodePart(3).Equals("plain");
                 });
@@ -74,7 +74,7 @@ namespace Snowshoes.src.itemtypes
         }
 
         // Preserve fur boots condition when disassembling
-        public override void OnConsumedByCrafting(ItemSlot[] allInputSlots, ItemSlot stackInSlot, GridRecipe gridRecipe, CraftingRecipeIngredient fromIngredient, IPlayer byPlayer, int quantity) {
+        public override void OnConsumedByCrafting(ItemSlot[] allInputSlots, ItemSlot stackInSlot, IRecipeBase gridRecipe, IRecipeIngredient fromIngredient, IPlayer byPlayer, int quantity) {
             if (api.Side == EnumAppSide.Client) {
                 base.OnConsumedByCrafting(allInputSlots, stackInSlot, gridRecipe, fromIngredient, byPlayer, quantity);
                 return;
@@ -84,7 +84,7 @@ namespace Snowshoes.src.itemtypes
 
             if (stackInSlot.Itemstack == null || stackInSlot.Itemstack.Item == null) return;
 
-            if (Regex.IsMatch(gridRecipe.Name, @"snowshoes:disassemble-(un)?treated.*")) {
+            if (Regex.IsMatch(gridRecipe.Name.ToString(), @"snowshoes:disassemble-(un)?treated.*")) {
                 ItemSlot toUncraft = allInputSlots.First((sl) => sl.Itemstack != null);
                 string furCode = VARIANTS.Get(toUncraft.Itemstack.Item.FirstCodePart(3));
                 ItemStack furBoots = new(pl.Entity.World.SearchItems(furCode)[0]);
@@ -103,7 +103,7 @@ namespace Snowshoes.src.itemtypes
             base.OnModifiedInInventorySlot(world, slot, extractedStack);
         }
 
-        public override bool ConsumeCraftingIngredients(ItemSlot[] inSlots, ItemSlot outputSlot, GridRecipe recipe) {
+        public override bool ConsumeCraftingIngredients(ItemSlot[] inSlots, ItemSlot outputSlot, IRecipeBase recipe) {
             return snowshoes.HandleConsumeCraftingIngredients(inSlots, outputSlot, recipe);
         }
     }
