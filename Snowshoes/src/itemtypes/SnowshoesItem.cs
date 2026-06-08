@@ -233,7 +233,7 @@ namespace Snowshoes.src.itemtypes
 
         public int GetInputRepairCount(ItemSlot[] inputSlots)
         {
-            OrderedDictionary<int, int> matcounts = new();
+            Dictionary<int, int> matcounts = new();
             foreach (var slot in inputSlots)
             {
                 if (slot.Empty || slot.Itemstack.Collectible is ItemWearableAttachment) continue;

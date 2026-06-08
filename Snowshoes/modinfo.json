@@ -1,14 +1,15 @@
 {
   "type": "code",
-  "modid": "snowshoes",
-  "name": "Snowshoes",
+  "modid": "snowshoes-forked",
+  "name": "Snowshoes (Forked)",
   "authors": [
-    "LivCi"
+    "LivCi",
+    "Rage4556"
   ],
   "description": "Adds pairs of shoes that allow you to walk over snow and without being slowed down",
   "version": "2.2.0",
   "dependencies": {
-    "game": ">=1.22.0",
-    "survival": ">=1.22.0"
+    "game": "1.22.0",
+    "survival": "1.22.0"
   }
 }
