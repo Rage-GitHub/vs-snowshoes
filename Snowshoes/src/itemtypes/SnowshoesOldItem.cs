@@ -8,7 +8,7 @@ using Vintagestory.API.Common;
 using Vintagestory.GameContent;
 
 namespace Snowshoes.src.itemtypes {
-    internal class SnowshoesOldItem : ItemWearableAttachment {
+    internal class SnowshoesOldItem : Item {
         // Patch old 1.x snowshoes into the new 2.x variant on item drop
         public override void OnGroundIdle(EntityItem entityItem) {
             bool success = PatchSnowshoesToVersion2(entityItem.Itemstack, (placeholder) => {

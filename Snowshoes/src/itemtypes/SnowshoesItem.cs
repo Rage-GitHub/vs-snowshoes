@@ -16,6 +16,12 @@ namespace Snowshoes.src.itemtypes
     {
         private new readonly ICoreAPI api;
 
+        private static bool IsSnowshoeAttachment(CollectibleObject collectible)
+        {
+            return collectible?.Code?.Domain == "snowshoes"
+                && collectible.HasBehavior<CollectibleBehaviorWearableAttachment>();
+        }
+
         public SnowshoesItem(ICoreAPI api) {
             this.api = api;
         }
@@ -42,7 +48,7 @@ namespace Snowshoes.src.itemtypes
 
             CalculateRepairValue(inputs, outputSlot, mat, out float repairValue, out int matCostPerMatType, out int availableRepairMatCount);
 
-            ItemSlot shoes = inputs.FirstOrDefault(slot => slot.Itemstack?.Collectible is ItemWearableAttachment);
+            ItemSlot shoes = inputs.FirstOrDefault(slot => IsSnowshoeAttachment(slot.Itemstack?.Collectible));
             int repairCount = shoes.Itemstack.Attributes.GetInt("repairCount", -1);
 
             if (repairCount != -1 && !SnowshoesModSystem.GetInstance().config.unlimitedRepairs)
@@ -135,7 +141,7 @@ namespace Snowshoes.src.itemtypes
                 {
                     if (islot.Empty) continue;
 
-                    if (islot.Itemstack.Collectible is ItemWearableAttachment) {
+                    if (IsSnowshoeAttachment(islot.Itemstack.Collectible)) {
                         islot.Itemstack = null; 
                         continue;
                     }
@@ -151,7 +157,7 @@ namespace Snowshoes.src.itemtypes
 
         public void CalculateRepairValue(ItemSlot[] inSlots, ItemSlot outputSlot, SnowshoeRepairMaterial mat, out float repairValue, out int matCostPerMatType, out int availableRepairMatCount)
         {
-            var snowshoesSlot = inSlots.FirstOrDefault(slot => slot.Itemstack?.Collectible is ItemWearableAttachment);
+            var snowshoesSlot = inSlots.FirstOrDefault(slot => IsSnowshoeAttachment(slot.Itemstack?.Collectible));
             int curDur = outputSlot.Itemstack.Collectible.GetRemainingDurability(snowshoesSlot.Itemstack);
             int maxDur = outputSlot.Itemstack.Collectible.GetMaxDurability(outputSlot.Itemstack);
 
@@ -211,7 +217,7 @@ namespace Snowshoes.src.itemtypes
             {
                 if (slot.Empty) continue;
                 bool found = false;
-                if (slot.Itemstack.Collectible is ItemWearableAttachment) continue;
+                if (IsSnowshoeAttachment(slot.Itemstack.Collectible)) continue;
 
                 foreach (var stack in stackTypes)
                 {
@@ -236,7 +242,7 @@ namespace Snowshoes.src.itemtypes
             Dictionary<int, int> matcounts = new();
             foreach (var slot in inputSlots)
             {
-                if (slot.Empty || slot.Itemstack.Collectible is ItemWearableAttachment) continue;
+                if (slot.Empty || IsSnowshoeAttachment(slot.Itemstack.Collectible)) continue;
                 var hash = slot.Itemstack.GetHashCode();
                 matcounts.TryGetValue(hash, out int cnt);
                 matcounts[hash] = cnt + slot.StackSize;

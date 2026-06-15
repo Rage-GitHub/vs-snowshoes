@@ -31,7 +31,7 @@
         "code": "game:plank-*",
         "quantity": 1,
         "name": "wood",
-        "skipVariants": [ "aged", "agedebony", "rottenebony", "crude" ]
+        "skipVariants": [ "aged", "veryaged", "agedebony", "rottenebony", "crude" ]
       }
     },
     "output": {

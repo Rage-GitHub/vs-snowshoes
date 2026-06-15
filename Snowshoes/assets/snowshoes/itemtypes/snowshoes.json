@@ -36,6 +36,11 @@
     "snowshoes-wooden-crude-reindeer-*",
     "snowshoes-*-reindeer-waxed"
   ],
+  "behaviors": [
+    {
+      "name": "Wearable"
+    }
+  ],
   "storageFlags": 128,
   "attributesByType": {
     "snowshoes-*-plain-*": {

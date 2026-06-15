@@ -1,6 +1,5 @@
 {
   "code": "tallgrass",
-  "class": "BlockTallGrass",
   "entityClassByType": {
     "tallgrass-eaten-*": "Transient"
   },

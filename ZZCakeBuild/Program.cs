@@ -4,16 +4,22 @@ using Cake.Common;
 using Cake.Common.IO;
 using Cake.Common.Tools.DotNet;
 using Cake.Common.Tools.DotNet.Clean;
+using Cake.Common.Tools.DotNet.MSBuild;
 using Cake.Common.Tools.DotNet.Publish;
 using Cake.Core;
 using Cake.Frosting;
 using Cake.Json;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Vintagestory.API.Common;
 
 namespace CakeBuild
 {
+    public sealed class ModInfo
+    {
+        public string Version { get; set; } = string.Empty;
+        public string ModID { get; set; } = string.Empty;
+    }
+
     public static class Program
     {
         public static int Main(string[] args)
@@ -74,17 +80,24 @@ namespace CakeBuild
     {
         public override void Run(BuildContext context)
         {
+            var vintageStory = System.Environment.GetEnvironmentVariable("VINTAGE_STORY");
+            if (string.IsNullOrEmpty(vintageStory))
+                throw new Exception("VINTAGE_STORY environment variable is not set. Set it to your Vintage Story install path before building.");
+
             context.DotNetClean($"../{BuildContext.ProjectName}/{BuildContext.ProjectName}.csproj",
                 new DotNetCleanSettings
                 {
-                    Configuration = context.BuildConfiguration
+                    Configuration = context.BuildConfiguration,
+                    MSBuildSettings = new DotNetMSBuildSettings()
+                        .WithProperty("VINTAGE_STORY", vintageStory)
                 });
-
 
             context.DotNetPublish($"../{BuildContext.ProjectName}/{BuildContext.ProjectName}.csproj",
                 new DotNetPublishSettings
                 {
-                    Configuration = context.BuildConfiguration
+                    Configuration = context.BuildConfiguration,
+                    MSBuildSettings = new DotNetMSBuildSettings()
+                        .WithProperty("VINTAGE_STORY", vintageStory)
                 });
         }
     }

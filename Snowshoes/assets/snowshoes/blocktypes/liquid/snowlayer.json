@@ -1,6 +1,6 @@
 {
   "code": "snowlayer",
-  "class": "snowshoes.SnowLayer",
+  "class": "snowshoesforked.SnowLayer",
   "behaviors": [
     {
       "name": "UnstableFalling",

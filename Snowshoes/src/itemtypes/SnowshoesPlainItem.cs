@@ -19,7 +19,7 @@ using Vintagestory.ServerMods;
 
 namespace Snowshoes.src.itemtypes
 {
-    internal partial class SnowshoesPlainItem : ItemWearableAttachment
+    internal partial class SnowshoesPlainItem : Item
     {
         private static readonly SnowshoesItem snowshoes = new(SnowshoesModSystem.api);
 

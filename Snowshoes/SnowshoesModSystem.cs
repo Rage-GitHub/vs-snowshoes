@@ -34,6 +34,7 @@ namespace Snowshoes
             logger = Mod.Logger;
             SnowshoesModSystem.api = api;
 
+            api.RegisterBlockClass("snowshoes.SnowLayer", typeof(SnowshoesSnowLayer));
             api.RegisterBlockClass(Mod.Info.ModID + ".SnowLayer", typeof(SnowshoesSnowLayer));
             api.RegisterItemClass("SnowshoesPlain", typeof(SnowshoesPlainItem));
             api.RegisterItemClass("SnowshoesFur", typeof(SnowshoesFurItem));
