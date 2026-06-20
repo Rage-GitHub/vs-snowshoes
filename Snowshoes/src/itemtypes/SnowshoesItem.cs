@@ -18,8 +18,7 @@ namespace Snowshoes.src.itemtypes
 
         private static bool IsSnowshoeAttachment(CollectibleObject collectible)
         {
-            return collectible?.Code?.Domain == "snowshoes"
-                && collectible.HasBehavior<CollectibleBehaviorWearableAttachment>();
+            return collectible is SnowshoesPlainItem or SnowshoesFurItem;
         }
 
         public SnowshoesItem(ICoreAPI api) {
@@ -32,7 +31,6 @@ namespace Snowshoes.src.itemtypes
 
         public bool HandleOnCreatedByCraftingRepair(ItemSlot[] inputs, ref ItemSlot outputSlot, IRecipeBase byRecipe)
         {
-
             int curDur = outputSlot.Itemstack.Collectible.GetRemainingDurability(outputSlot.Itemstack);
             int maxDur = outputSlot.Itemstack.Collectible.GetMaxDurability(outputSlot.Itemstack);
 
@@ -48,12 +46,11 @@ namespace Snowshoes.src.itemtypes
 
             CalculateRepairValue(inputs, outputSlot, mat, out float repairValue, out int matCostPerMatType, out int availableRepairMatCount);
 
-            ItemSlot shoes = inputs.FirstOrDefault(slot => IsSnowshoeAttachment(slot.Itemstack?.Collectible));
-            int repairCount = shoes.Itemstack.Attributes.GetInt("repairCount", -1);
+            int repairCount = outputSlot.Itemstack.Attributes.GetInt("repairCount", -1);
 
             if (repairCount != -1 && !SnowshoesModSystem.GetInstance().config.unlimitedRepairs)
             {
-                int maxRepairCount = shoes.Itemstack.Item.FirstCodePart(1) switch
+                int maxRepairCount = outputSlot.Itemstack.Item.FirstCodePart(1) switch
                 {
                     "wooden" => SnowshoesModSystem.GetInstance().config.maxRepairCountWood,
                     "metal" => SnowshoesModSystem.GetInstance().config.maxRepairCountMetal,
@@ -158,6 +155,16 @@ namespace Snowshoes.src.itemtypes
         public void CalculateRepairValue(ItemSlot[] inSlots, ItemSlot outputSlot, SnowshoeRepairMaterial mat, out float repairValue, out int matCostPerMatType, out int availableRepairMatCount)
         {
             var snowshoesSlot = inSlots.FirstOrDefault(slot => IsSnowshoeAttachment(slot.Itemstack?.Collectible));
+            
+            // Handle case where no snowshoe attachment is found in input slots
+            if (snowshoesSlot == null || snowshoesSlot.Itemstack == null)
+            {
+                repairValue = 0;
+                matCostPerMatType = 0;
+                availableRepairMatCount = 0;
+                return;
+            }
+            
             int curDur = outputSlot.Itemstack.Collectible.GetRemainingDurability(snowshoesSlot.Itemstack);
             int maxDur = outputSlot.Itemstack.Collectible.GetMaxDurability(outputSlot.Itemstack);
 
@@ -247,7 +254,7 @@ namespace Snowshoes.src.itemtypes
                 matcounts.TryGetValue(hash, out int cnt);
                 matcounts[hash] = cnt + slot.StackSize;
             }
-            return matcounts.Values.Min();
+            return matcounts.Values.Count > 0 ? matcounts.Values.Min() : 0;
         }
     }
 }
